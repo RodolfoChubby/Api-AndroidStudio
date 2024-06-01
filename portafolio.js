@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const portafolioSchema = new mongoose.Schema({
+    nombre: {
+        type: String
+    },
     correo: {
         type: String
     },
