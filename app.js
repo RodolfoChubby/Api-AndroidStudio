@@ -1,9 +1,8 @@
 const express = require('express');
-const cors = require('cors'); // Importar cors
+const cors = require('cors');
 const dbconnect = require('./config');
 const ModelPortafolio = require('./portafolio');
 const app = express();
-
 const router = express.Router();
 
 // Habilitar CORS para todas las rutas
@@ -12,35 +11,58 @@ app.use(cors());
 // Middleware para parsear JSON
 app.use(express.json());
 
+// Middleware para manejar solicitudes a favicon.ico
+app.use('/favicon.ico', (req, res) => res.status(204).end());
+
 // Rutas
 router.post("/", async (req, res) => {
-    const body = req.body;
-    const respuesta = await ModelPortafolio.create(body);
-    res.send(respuesta);
+    try {
+        const body = req.body;
+        const respuesta = await ModelPortafolio.create(body);
+        res.send(respuesta);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 router.get("/", async (req, res) => {
-    const respuesta = await ModelPortafolio.find({});
-    res.send(respuesta);
+    try {
+        const respuesta = await ModelPortafolio.find({});
+        res.send(respuesta);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 router.get("/:id", async (req, res) => {
-    const id = req.params.id;
-    const respuesta = await ModelPortafolio.findById(id);
-    res.send(respuesta);
+    try {
+        const id = req.params.id;
+        const respuesta = await ModelPortafolio.findById(id);
+        res.send(respuesta);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 router.put("/:id", async (req, res) => {
-    const id = req.params.id;
-    const body = req.body;
-    const respuesta = await ModelPortafolio.findByIdAndUpdate(id, body, { new: true });
-    res.send(respuesta);
+    try {
+        const id = req.params.id;
+        const body = req.body;
+        const respuesta = await ModelPortafolio.findByIdAndUpdate(id, body, { new: true });
+        res.send(respuesta);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 router.delete("/:id", async (req, res) => {
-    const id = req.params.id;
-    const respuesta = await ModelPortafolio.findByIdAndDelete(id);
-    res.send(respuesta);
+    try {
+        const id = req.params.id;
+        const respuesta = await ModelPortafolio.findByIdAndDelete(id);
+        res.send(respuesta);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // Usar el router
