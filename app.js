@@ -68,13 +68,9 @@ router.delete("/:id", async (req, res) => {
 // Usar el router
 app.use(router);
 
-// Iniciar el servidor localmente
-if (process.env.NODE_ENV !== 'production') {
     app.listen(3001, () => {
         console.log('Server is running on port 3001');
-    });
-}
-
+        });
 // Conectar a la base de datos
 dbconnect();
 
